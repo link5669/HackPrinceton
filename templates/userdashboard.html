@@ -5,21 +5,21 @@
 	<style>
 		body {
 			font-family: Verdana, sans-serif;
-		    background: linear-gradient(to right, #5D536B, #7D6B91, #989FCE);
-    background-size: 400% 400%;
-    animation: gradient 10s ease infinite;
-
+			background: linear-gradient(to right, #5D536B, #7D6B91, #989FCE);
+			background-size: 400% 400%;
+			animation: gradient 10s ease infinite;
 		}
+
 		@keyframes gradient {
-    0% {
-        background-position: 0 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0 50%;
-    }
+			0% {
+				background-position: 0 50%;
+			}
+			50% {
+				background-position: 100% 50%;
+			}
+			100% {
+				background-position: 0 50%;
+			}
 		}
 
 		.navbar {
@@ -33,15 +33,21 @@
 		.navbar a {
 			color: #fff;
 			text-decoration: none;
-			margin-left: 20px;
+			margin-right: 20px;
 			font-size: 20px;
+		}
+
+		.navbar a:first-child {
+			margin-left: 0;
+		}
+
+		.navbar a:last-child {
+			margin-left: auto;
 		}
 
 		.navbar a:hover {
 			color: #347FC4;
 		}
-
-
 	</style>
 </head>
 <body>
@@ -50,7 +56,7 @@
 			<a href="mainpage.html">Home</a>
 			<a href="userdashboard.html">Dashboard</a>
 		</div>
+		<a href="login.html">Log Out</a>
 	</nav>
-	
 </body>
 </html>
