@@ -2,3 +2,4 @@
 environment
 .vscode
 /music_logic/__pycache__
+__pycache__
