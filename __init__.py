@@ -19,7 +19,6 @@ debug = True
 app.secret_key = urandom(24)
 
 def get_file_names():
-    print("file")
     mydb = client["user_files"]
     collection = mydb["files"]
     item_details = collection.find()
