@@ -1,6 +1,6 @@
 from operator import methodcaller
 from flask import session
-from flask import request, render_template, Flask, redirect, url_for
+from flask import request, render_template, Flask, redirect, url_for, make_response
 from midiutil.MidiFile3 import MIDIFile
 from os import urandom
 import pymongo
@@ -24,10 +24,6 @@ app.secret_key = urandom(24)
 #   Implimentationationation
 #   Adding error messages and try and fails
 
-#helper method
-
-username = ""
-
 def image_to_midi(file_in,file_out):
     try:
         start("static/images/" + file_in.filename ,file_out)
@@ -49,24 +45,21 @@ def upload():
     Page for uploading sheet music
     '''
     umess = ""
-    if (username == ""):
+    if (type(request.cookies.get('username')) is type(None)):
         umess = "Login"
     else:
-        umess = "Welcome, " + username
+        umess = "Welcome, " + request.cookies.get('username')
     if request.method == "POST":
         file = request.files['image-upload']
         file.save("static/images/" + file.filename)
         new_name = "/midi/" + file.filename[:file.filename.find(".")] + ".mid"
-        render_template("mainpage.html", login_message=umess, message="Loading!")
         processed = image_to_midi(file, "static/" + new_name) #function doesn't need to return midi -> can save within the static folder with filename
         if processed:
             # send post request to sheet/processed where it plays the midi file and provides it for download -> deletes from static automatically?
             session["current_file"] = new_name
-            return redirect(url_for('.process', midi_file=new_name))
-            # return redirect("/sheet/processed")
+            return redirect(url_for('.process', midi_file=new_name, username=request.cookies.get('username')))
         else:
             # redirect request to sheet/upload about it not working
-            # return redirect("/sheet/failed")
             return render_template("mainpage.html", login_message=umess, message="There's an issue with the image you uploaded. Try retaking or cropping the picture.")
     return render_template("mainpage.html", login_message="Welcome, " + umess)        
 
@@ -76,6 +69,11 @@ def process():
     Page for uploading sheet music
     '''
     midi_file = request.args['midi_file']
+    if request.method == "POST":
+        mydb = client["user_files"]
+        mycol = mydb["files"]
+        mydict = { "username": request.cookies.get('username'), "file": midi_file }
+        x = mycol.insert_one(mydict)
     return render_template("processed.html", file_dir=midi_file)
 
 @app.route("/failed", methods=['GET', 'POST'])
@@ -110,8 +108,8 @@ def login():
    for item in item_details:
        if (item["username"] == request.form['email'] and
            item["password"] == request.form['password']):
-           username = request.form['email']
-   return render_template("mainpage.html", login_message="Welcome, " + username)
+           make_response().set_cookie('username', request.form['email'])
+   return render_template("mainpage.html", login_message="Welcome, " + request.form['email'])
 
 @app.route('/login',methods = ['GET'])
 def see_login():
