@@ -120,10 +120,12 @@
 <body>
 	<nav class="navbar">
 		<div>
-			<a href="mainpage.html">Home</a>
-			<a href="userdashboard.html">Dashboard</a>
+			<a href="/">Home</a>
+			<a href="/userdashboard">Dashboard</a>
 		</div>
 		<a href="login.html">Log Out</a>
+
+		<h2> <a href="{{ url_for('.process', midi_file='cropped.mid', username=username ) }}">BEEP</a> </h2>
 	</nav>
 
     <div class="muzieknootjes">

@@ -47,7 +47,6 @@ def upload():
         umess = "Welcome, " + request.cookies.get('username')
     if request.method == "POST":
         file = request.files['image-upload']
-        file.save("static/images/" + file.filename)
         new_name = "/midi/" + file.filename[:file.filename.find(".")] + ".mid"
         processed = image_to_midi(file, "static/" + new_name) #function doesn't need to return midi -> can save within the static folder with filename
         if processed:
@@ -110,6 +109,11 @@ def login():
 @app.route('/login',methods = ['GET'])
 def see_login():
    return render_template("login.html")
+
+@app.route('/userdashboard',methods = ['GET'])
+def dashboard():
+    return render_template("userdashboard.html",username=session["username"])
+
 
 def main():
     """
