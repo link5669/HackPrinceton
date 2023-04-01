@@ -22,8 +22,11 @@ app.secret_key = urandom(24)
 #helper method
 
 def image_to_midi(file_in,file_out):
-    start("music_logic/resources/samples/piano.png",file_out)
-    return "BLANKS"
+    try:
+        start("music_logic/resources/samples/piano.png",file_out)
+        return True
+    except:
+        return False
 
 # @app.route("/", methods=['GET'])
 # def welcome():
@@ -41,12 +44,10 @@ def upload():
     if request.method == "POST":
         print("post req activated!")
         file = request.files['image-upload']
-        new_name = file.filename[:file.filename.find(".")] + ".mid"
-        midi = image_to_midi(file, new_name) #function doesn't need to return midi -> can save within the static folder with filename
-        processed = midi == None or False
+        new_name = "static/" + file.filename[:file.filename.find(".")] + ".mid"
+        processed = image_to_midi(file, new_name) #function doesn't need to return midi -> can save within the static folder with filename
         if processed:
             # send post request to sheet/processed where it plays the midi file and provides it for download -> deletes from static automatically?
-            
             session["current_file"] = new_name
             return redirect("/processed")
             # return redirect("/sheet/processed")
@@ -62,7 +63,9 @@ def process():
     '''
     Page for uploading sheet music
     '''
-    return render_template("processed.html")
+    return render_template("processed.html", file_dir="static/test.mid")
+
+    #return render_template("processed.html",file_dir=session["current_file"])
 
 
 @app.route("/failed", methods=['GET', 'POST'])
@@ -92,11 +95,6 @@ def login():
 @app.route('/login',methods = ['GET'])
 def see_login():
     return render_template("signup.html")
-
-@app.route('/midi_file',methods=["GET","POST"])
-def play_file():
-    
-    return render_template("play_file.html",midi_file="static/test.mid")
 
 def main():
     # image_to_midi()
