@@ -102,7 +102,7 @@ def register():
    else:
         mydb = client["user_info"]
         mycol = mydb["customers"]
-   return render_template("mainpage.html")
+   return render_template("mainpage.html", login_message="Welcome, " + request.form['email'])
 
 @app.route('/register',methods = ['GET'])
 def see_register():
