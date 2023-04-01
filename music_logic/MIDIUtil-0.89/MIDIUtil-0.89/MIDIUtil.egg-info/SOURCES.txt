@@ -1,0 +1,12 @@
+README.txt
+setup.py
+MIDIUtil.egg-info/PKG-INFO
+MIDIUtil.egg-info/SOURCES.txt
+MIDIUtil.egg-info/dependency_links.txt
+MIDIUtil.egg-info/top_level.txt
+examples/single-note-example.py
+src/midiutil/MidiFile.py
+src/midiutil/MidiFile3.py
+src/midiutil/__init__.py
+src/midiutil/../../documentation/ClassReference.txt
+src/midiutil/../../documentation/Extending.txt
