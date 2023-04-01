@@ -4,8 +4,28 @@
 	<title>Sheet Music Scanner</title>
 	<style>
 		body {
-			font-family: Arial, sans-serif;
+			font-family: Verdana, sans-serif;
 			background-color: #f1f1f1;
+		}
+
+		.navbar {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			background-color: #333;
+			color: #fff;
+			padding: 20px;
+		}
+
+		.navbar a {
+			color: #fff;
+			text-decoration: none;
+			margin-left: 20px;
+			font-size: 20px;
+		}
+
+		.navbar a:hover {
+			color: #aaa;
 		}
 
 		h1 {
@@ -54,6 +74,12 @@
 	</style>
 </head>
 <body>
+	<nav class="navbar">
+		<div>
+			<a href="#">Home</a>
+			<a href="#">Dashboard</a>
+		</div>
+	</nav>
 	<h1>Sheet Music Scanner</h1>
 	<p>DESCRIPTION. TBA</p>
 	<form action="/sheet/compiling" method = "POST">
@@ -61,9 +87,6 @@
 		<input type="file" accept="image/jpeg" id="image-upload" name="image-upload" value="image-upload"/>
 		<button type="submit">Submit</button>
 	</form>
+	<p>DESCRIPTION. TBA</p>
 </body>
 </html>
-
-
-
-
