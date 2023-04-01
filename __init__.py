@@ -43,6 +43,8 @@ def upload():
     umess = ""
     if (type(request.cookies.get('username')) is type(None)):
         umess = "Login"
+        return render_template("welcome.html", login_message=umess)
+
     else:
         umess = "Welcome, " + request.cookies.get('username')
     if request.method == "POST":
