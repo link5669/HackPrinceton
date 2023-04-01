@@ -1,14 +1,99 @@
 <!DOCTYPE html>
 <html>
+    <title>Sheet Music Scanner</title>
+    <style>
+        body {
+            font-family: Verdana, sans-serif;
+            background: linear-gradient(to right, #5D536B, #7D6B91, #989FCE);
+            background-size: 400% 400%;
+            animation: gradient 10s ease infinite;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0 50%;
+            }
+        }
+
+        h1 {
+            color: #fff;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #fff;
+            padding: 20px;
+            width: 100%;
+        }
+
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+            margin-right: 20px;
+            font-size: 20px;
+        }
+
+        .navbar a:first-child {
+            margin-left: 0;
+        }
+
+        .navbar a:last-child {
+            margin-left: auto;
+        }
+
+        .navbar a:hover {
+            color: #347FC4;
+        }
+
+        h2 {
+            color: #fff;
+        }
+
+        .download-button {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 20px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .download-button:hover {
+            background-color: #347FC4;
+            color: #fff;
+        }
+    </style>
     <script
         src="https://cdn.jsdelivr.net/combine/npm/tone@14.7.58,npm/@magenta/music@1.23.1/es6/core.js,npm/focus-visible@5,npm/html-midi-player@1.5.0"></script>
     <head></head>
     <body>
-        <h1>test play</h1>
-        <midi-player src="{{file_dir}}" sound-font visualizer="#myVisualizer">
-        </midi-player>
-        <midi-visualizer type="piano-roll" id="myVisualizer"></midi-visualizer>
-        <h2><a href="{{file_dir}}">Download Link</a></h2>
+        <nav class="navbar">
+            <div>
+                <a href="mainpage.html">Home</a>
+                <a href="userdashboard.html">Dashboard</a>
+            </div>
+            <a href="login.html">Log Out</a>
+        </nav>
+        <h1>Play the Audio</h1>
+        <midi-player src="{{file_dir}}" sound-font visualizer="#myVisualizer"></midi-player>
+        <midi-visualizer type="piano-roll" id="myPianoRollVisualizer" 
+        src="https://cdn.jsdelivr.net/gh/cifkao/html-midi-player@2b12128/twinkle_twinkle.mid">
+      </midi-visualizer>
+        <script src="https://cdn.jsdelivr.net/combine/npm/tone@14.7.58,npm/@magenta/music@1.23.1/es6/core.js,npm/focus-visible@5,npm/html-midi-player@1.5.0"></script>
+        <button class="download-button" onclick="window.location.href='{{file_dir}}'">Download</button>
     </body>
 </html>
-
