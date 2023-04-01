@@ -1,9 +1,10 @@
 from operator import methodcaller
 from flask import session
-from flask import request, render_template, Flask, redirect
-# from MIDIUtil.MidiFile3 import MIDIFile
+from flask import request, render_template, Flask, redirect, url_for
+from midiutil.MidiFile3 import MIDIFile
 from os import urandom
 import pymongo
+from music_logic.main import start
 
 client = pymongo.MongoClient("mongodb+srv://link5669:princeton@cluster0.uayhxkd.mongodb.net/?retryWrites=true&w=majority")
 db = client.test
@@ -21,6 +22,7 @@ app.secret_key = urandom(24)
 #helper method
 
 def image_to_midi():
+    start("music_logic/resources/samples/piano.png")
     return "BLANKS"
 
 @app.route("/", methods=['GET'])
@@ -99,6 +101,7 @@ def see_login():
     return render_template("signup.html")
 
 def main():
+    # image_to_midi()
     """
     false if this file imported as module
     debugging enabled
