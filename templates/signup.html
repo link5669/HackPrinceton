@@ -2,6 +2,83 @@
 <html>
 <head>
 	<title>Signup</title>
+	<style type="text/css">
+		h1{
+			color:#fff;
+		}
+		body {
+			font-family: Verdana, sans-serif;
+		    background: linear-gradient(to right, #5D536B, #7D6B91, #989FCE);
+    		background-size: 400% 400%;
+    		animation: gradient 10s ease infinite;
+			color:#fff;
+			}
+			@keyframes gradient {
+    0% {
+        background-position: 0 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0 50%;
+    }
+		}
+			form {
+			/*background-color: #272838;*/
+			padding: 20px;
+			max-width: 500px;
+			margin: 50px auto;
+			border-radius: 5px;
+			/*box-shadow: 0px 0px 10px rgba(0,0,0,0.2);*/
+		}
+		form h2 {
+			font-size: 30px;
+			font-weight: 600;
+			margin-top: 0px;
+			margin-bottom: 20px;
+			color: #fff;
+		}
+		form label {
+			font-size: 18px;
+			display: block;
+			margin-bottom: 5px;
+			color: #fff;
+		}
+		form input[type="text"], form input[type="password"], form input[type="number"] {
+			height: 40px;
+			border-radius: 5px;
+			padding: 0px 10px;
+			border: none;
+			width: 100%;
+			font-size: 16px;
+			margin-bottom: 20px;
+			box-sizing: border-box;
+			border: solid thin #aaa;
+		}
+		form input[type="submit"] {
+			background-color: #333;
+			color: #fff;
+			border: none;
+			padding: 10px 20px;
+			font-size: 18px;
+			border-radius: 5px;
+			cursor: pointer;
+			transition: background-color 0.2s ease-in-out;
+		}
+		form input[type="submit"]:hover {
+			background-color: #347FC4;
+		}
+		form a {
+			color: #fff;
+			text-decoration: none;
+			font-size: 16px;
+		}
+		form a:hover {
+			color: #347FC4;
+		}
+
+	</style>
 	<link rel="stylesheet" href="styles/signup.css">
 </head>
 <body>
@@ -26,7 +103,7 @@
 		<input type="submit" value="Sign up">
 
 		<div style="margin-top: 20px;">
-			Already have an account? <a href="login.php">Click to Login</a>
+			Already have an account? <a href="login.html">Click to Login</a>
 		</div>
 	</form>
 
