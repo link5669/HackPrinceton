@@ -16,13 +16,17 @@ except ConnectionFailure:
 
 app = Flask(__name__)
 debug = True
-#why do we need secret keys? For this project it is not really necessary but...
-#https://stackoverflow.com/questions/22463939/demystify-flask-app-secret-key
-#I believe in a real life environment we should store the key somewhere safe in case of server crash
 app.secret_key = urandom(24)
-#   Things to work on:
-#   Implimentationationation
-#   Adding error messages and try and fails
+
+def get_file_names():
+    mydb = client["user_files"]
+    collection = mydb["files"]
+    item_details = collection.find()
+    ret = []
+    for item in item_details:
+        if (item["username"] == request.cookies.get('username')):
+            ret.append(item["file"])
+    return ret
 
 def image_to_midi(file_in,file_out):
     try:
@@ -30,14 +34,6 @@ def image_to_midi(file_in,file_out):
         return True
     except:
         return False
-
-# @app.route("/", methods=['GET'])
-# def welcome():
-#     '''
-#     Welcome Page
-#     '''
-#     return render_template("mainpage.html")
-
 
 @app.route("/", methods=['GET', 'POST'])
 def upload():
@@ -60,7 +56,7 @@ def upload():
         else:
             # redirect request to sheet/upload about it not working
             return render_template("mainpage.html", login_message=umess, message="There's an issue with the image you uploaded. Try retaking or cropping the picture.")
-    return render_template("mainpage.html", login_message="Welcome, " + umess)        
+    return render_template("mainpage.html", login_message=umess)        
 
 @app.route("/processed", methods=['GET', 'POST'])
 def process():
@@ -73,6 +69,7 @@ def process():
         mycol = mydb["files"]
         mydict = { "username": request.cookies.get('username'), "file": midi_file }
         x = mycol.insert_one(mydict)
+        get_file_names()
     return render_template("processed.html", file_dir=midi_file)
 
 @app.route("/failed", methods=['GET', 'POST'])
@@ -84,16 +81,13 @@ def fail():
 
 @app.route('/register',methods = ['POST'])
 def register():
-   dblist = client.list_database_names()
-   if "user_info" in dblist:
-        mydb = client["user_info"]
-        mycol = mydb["customers"]
-        mydict = { "username": request.form['email'], "password": request.form['password'] }
-        x = mycol.insert_one(mydict)
-   else:
-        mydb = client["user_info"]
-        mycol = mydb["customers"]
-   return render_template("mainpage.html", login_message="Welcome, " + request.form['email'])
+    dblist = client.list_database_names()
+    mydb = client["user_info"]
+    mycol = mydb["customers"]
+    mydict = { "username": request.form['email'], "password": request.form['password'] }
+    x = mycol.insert_one(mydict)
+    make_response().set_cookie('username', request.form['email'])
+    return render_template("mainpage.html", login_message="Welcome, " + request.form['email'])
 
 @app.route('/register',methods = ['GET'])
 def see_register():
@@ -107,9 +101,10 @@ def login():
    for item in item_details:
        if (item["username"] == request.form['email'] and
            item["password"] == request.form['password']):
-           session["username"] = request.form["email"]
-           make_response().set_cookie('username', request.form['email'])
-   return render_template("mainpage.html", login_message="Welcome, " + request.form['email'])
+           resp = make_response(render_template("mainpage.html", login_message="Welcome, " + request.form['email']))
+           resp.set_cookie('username', request.form['email'])
+           return resp
+   return render_template("login.html")
 
 @app.route('/login',methods = ['GET'])
 def see_login():
