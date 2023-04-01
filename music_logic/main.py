@@ -80,7 +80,7 @@ def open_file(path):
     cmd = {'linux':'eog', 'win32':'explorer', 'darwin':'open'}[sys.platform]
     subprocess.run([cmd, path])
 
-def start(im_path):
+def start(im_path,out_path):
     img_file = im_path
     img = cv2.imread(img_file, 0)
     img_gray = img#cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -243,7 +243,7 @@ def start(im_path):
 
     midi.addNote(track,channel,pitch,time,4,0)
     # And write it to disk.
-    # binfile = open("output.mid", 'wb')
+    binfile = open(out_path, 'wb')
     midi.writeFile(binfile)
     binfile.close()
     # open_file('output.mid')

@@ -107,10 +107,7 @@
 			background-color: #347FC4;
 		}
 	</style>
-<<<<<<< HEAD
-=======
 	<link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
->>>>>>> e86ea926073437db86f253fd74ab099668b3d831
 </head>
 <body>
 	<nav class="navbar">
@@ -121,7 +118,8 @@
 			<a href="login.html">Logout</a>
 	</nav>
 	<h1>Sheet Music Scanner</h1>
-	<form action="/sheet/compiling" method = "POST" enctype="multipart/form-data">
+	<h2>{{message}}</h2>
+	<form action="/" method = "POST" enctype="multipart/form-data">
 		<label for="image-upload">Upload a JPEG image of your sheet music:</label>
 		<input type="file" accept="image/jpeg" id="image-upload" name="image-upload" value="image-upload"/>
 		<input type="submit" />

@@ -21,50 +21,43 @@ app.secret_key = urandom(24)
 
 #helper method
 
-def image_to_midi():
-    start("music_logic/resources/samples/piano.png")
+def image_to_midi(file_in,file_out):
+    start("music_logic/resources/samples/piano.png",file_out)
     return "BLANKS"
 
-@app.route("/", methods=['GET'])
-def welcome():
-    '''
-    Welcome Page
-    '''
-    return render_template("mainpage.html")
+# @app.route("/", methods=['GET'])
+# def welcome():
+#     '''
+#     Welcome Page
+#     '''
+#     return render_template("mainpage.html")
 
 
-@app.route("/sheet/upload", methods=['GET', 'POST'])
+@app.route("/", methods=['GET', 'POST'])
 def upload():
     '''
     Page for uploading sheet music
     '''
-    return render_template("upload.html")
-
-
-@app.route("/sheet/compiling", methods=['GET', 'POST'])
-def compile():
-    '''
-    In between for processing the music sheet uploaded
-    '''
-
-    #value processed represents if it was able to be compiled properly or not
-    if request.method == "GET":
-        return "Not here"
-    elif request.method == "POST":
-        #image_to_midi() is return of miles' end of the project
+    if request.method == "POST":
         print("post req activated!")
-        print(request.form["image-upload"])
-        midi = image_to_midi(request.form["image-upload"])
-        session["midi"] = midi
-        processed = midi != None
+        file = request.files['image-upload']
+        new_name = file.filename[:file.filename.find(".")] + ".mid"
+        midi = image_to_midi(file, new_name) #function doesn't need to return midi -> can save within the static folder with filename
+        processed = midi == None or False
         if processed:
-            return "worked"
-            #return redirect("/sheet/processed")
+            # send post request to sheet/processed where it plays the midi file and provides it for download -> deletes from static automatically?
+            
+            session["current_file"] = new_name
+            return redirect("/processed")
+            # return redirect("/sheet/processed")
         else:
-            return "didnt worked"
-            #return redirect("/sheet/failed")
+            # redirect request to sheet/upload about it not working
+            # return redirect("/sheet/failed")
+            return render_template("mainpage.html", message="There's an issue with the image you uploaded. Try retaking or cropping the picture.")
+    
+    return render_template("mainpage.html")        
 
-@app.route("/sheet/processed", methods=['GET', 'POST'])
+@app.route("/processed", methods=['GET', 'POST'])
 def process():
     '''
     Page for uploading sheet music
@@ -72,7 +65,7 @@ def process():
     return render_template("processed.html")
 
 
-@app.route("/sheet/failed", methods=['GET', 'POST'])
+@app.route("/failed", methods=['GET', 'POST'])
 def fail():
     '''
     Page for failed upload -> maybe replace with a failed prompt and redirect to upload?
