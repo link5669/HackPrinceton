@@ -1,3 +1,4 @@
 .DS_Store
 environment
 .vscode
+/music_logic/__pycache__

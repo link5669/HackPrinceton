@@ -100,12 +100,18 @@ def login():
 def see_login():
     return render_template("signup.html")
 
+@app.route('/midi_file',methods=["GET","POST"])
+def play_file():
+    
+    return render_template("play_file.html",midi_file="static/test.mid")
+
 def main():
     # image_to_midi()
     """
     false if this file imported as module
     debugging enabled
     """
+    app.config['UPLOAD_FOLDER'] = "/temp"
     app.debug = True
     app.run()
 
