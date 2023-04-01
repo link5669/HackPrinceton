@@ -27,7 +27,6 @@ app.secret_key = urandom(24)
 #helper method
 
 username = ""
-midi_file = ""
 
 def image_to_midi(file_in,file_out):
     try:
@@ -57,15 +56,13 @@ def upload():
     if request.method == "POST":
         file = request.files['image-upload']
         file.save("static/images/" + file.filename)
-        new_name = "static/midi/" + file.filename[:file.filename.find(".")] + ".mid"
+        new_name = "/midi/" + file.filename[:file.filename.find(".")] + ".mid"
         render_template("mainpage.html", login_message=umess, message="Loading!")
-        midi_file = new_name
-        print(new_name, midi_file)
-        processed = image_to_midi(file, new_name) #function doesn't need to return midi -> can save within the static folder with filename
+        processed = image_to_midi(file, "static/" + new_name) #function doesn't need to return midi -> can save within the static folder with filename
         if processed:
             # send post request to sheet/processed where it plays the midi file and provides it for download -> deletes from static automatically?
             session["current_file"] = new_name
-            return redirect("/processed")
+            return redirect(url_for('.process', midi_file=new_name))
             # return redirect("/sheet/processed")
         else:
             # redirect request to sheet/upload about it not working
@@ -78,11 +75,8 @@ def process():
     '''
     Page for uploading sheet music
     '''
-    print(midi_file, "aalkjsd")
-    return render_template("processed.html", file_dir="static/midi/" + midi_file)
-
-    #return render_template("processed.html",file_dir=session["current_file"])
-
+    midi_file = request.args['midi_file']
+    return render_template("processed.html", file_dir=midi_file)
 
 @app.route("/failed", methods=['GET', 'POST'])
 def fail():
@@ -102,7 +96,7 @@ def register():
    else:
         mydb = client["user_info"]
         mycol = mydb["customers"]
-   return render_template("mainpage.html")
+   return render_template("mainpage.html", login_message="Welcome, " + request.form['email'])
 
 @app.route('/register',methods = ['GET'])
 def see_register():
