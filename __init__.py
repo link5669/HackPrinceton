@@ -54,7 +54,6 @@ def upload():
     else:
         umess = "Welcome, " + username
     if request.method == "POST":
-        print("post req activated!")
         file = request.files['image-upload']
         new_name = "static/" + file.filename[:file.filename.find(".")] + ".mid"
         processed = image_to_midi(file, new_name) #function doesn't need to return midi -> can save within the static folder with filename
@@ -89,10 +88,8 @@ def fail():
 
 @app.route('/register',methods = ['POST'])
 def register():
-   print("a")
    dblist = client.list_database_names()
    if "user_info" in dblist:
-        print("The database exists.")
         mydb = client["user_info"]
         mycol = mydb["customers"]
         mydict = { "username": request.form['email'], "password": request.form['password'] }
@@ -110,14 +107,11 @@ def see_register():
 def login():
    mydb = client["user_info"]
    collection = mydb["customers"]
-   print(request.form['email'], request.form['password'])
    item_details = collection.find()
    for item in item_details:
-       print(item)
        if (item["username"] == request.form['email'] and
            item["password"] == request.form['password']):
            username = request.form['email']
-           print('login')
    return render_template("mainpage.html", login_message="Welcome, " + username)
 
 @app.route('/login',methods = ['GET'])
@@ -125,7 +119,6 @@ def see_login():
    return render_template("login.html")
 
 def main():
-    # image_to_midi()
     """
     false if this file imported as module
     debugging enabled
