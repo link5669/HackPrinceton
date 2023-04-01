@@ -26,6 +26,8 @@ app.secret_key = urandom(24)
 
 #helper method
 
+username = ""
+
 def image_to_midi(file_in,file_out):
     try:
         start("music_logic/resources/samples/piano.png",file_out)
@@ -46,6 +48,11 @@ def upload():
     '''
     Page for uploading sheet music
     '''
+    umess = ""
+    if (username == ""):
+        umess = "Login"
+    else:
+        umess = "Welcome, " + username
     if request.method == "POST":
         print("post req activated!")
         file = request.files['image-upload']
@@ -59,9 +66,9 @@ def upload():
         else:
             # redirect request to sheet/upload about it not working
             # return redirect("/sheet/failed")
-            return render_template("mainpage.html", message="There's an issue with the image you uploaded. Try retaking or cropping the picture.")
+            return render_template("mainpage.html", login_message=umess, message="There's an issue with the image you uploaded. Try retaking or cropping the picture.")
     
-    return render_template("mainpage.html")        
+    return render_template("mainpage.html", login_message="Welcome, " + umess)        
 
 @app.route("/processed", methods=['GET', 'POST'])
 def process():
@@ -109,8 +116,9 @@ def login():
        print(item)
        if (item["username"] == request.form['email'] and
            item["password"] == request.form['password']):
+           username = request.form['email']
            print('login')
-   return render_template("mainpage.html")
+   return render_template("mainpage.html", login_message="Welcome, " + username)
 
 @app.route('/login',methods = ['GET'])
 def see_login():
