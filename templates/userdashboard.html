@@ -116,6 +116,16 @@
  
           
 	</style>
+  <script>
+    function editText() {
+      var inputs = document.getElementsByClassName("img");
+      for (i = 0; i < inputs.length; i++) {
+        console.log("lakjs")
+        inputs[i].src = inputs[i].src.replace("/midi", "/static/images").replace(".mid", ".jpg")
+      }
+    }
+    window.onload = editText;
+  </script>
 </head>
 <body>
 	<nav class="navbar">
@@ -129,8 +139,12 @@
 	</nav>
 	<ul>
 		{%  for track in track_list  %}
-			<li><a href="{{ url_for('.process', midi_file=track, username=username ) }}">{{track}}</a></li>
-		{%  endfor  %}
+      <br>
+			<li><a style="color:white"href="{{ url_for('.process', midi_file=track, username=username ) }}">{{track}}</a></li>
+      <br>
+      <img style="width:80vw" class="img" src="{{ track }}" alt="track">
+      <br>
+		{%  endfor  %} 
 	</ul>
 
     <div class="muzieknootjes">

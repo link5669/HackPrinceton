@@ -154,7 +154,6 @@ def start(im_path,out_path):
         if len(note_group) > 0:
             note_groups.append(note_group)
             note_group = []
-
         for note in staff_notes:
             if note.rec.x > staffs[j].x and j < len(staffs):
                 note_groups.append(note_group)

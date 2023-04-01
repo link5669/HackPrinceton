@@ -175,7 +175,11 @@
           }
  
 	</style>
-	<!-- <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}"> -->
+	<script>
+		function loading() {
+			document.getElementById("desc").innerHTML = "Loading"
+		}
+	</script>
 </head>
 <body>
 	<nav class="navbar">
@@ -190,9 +194,9 @@
 	<form action="/" method = "POST" enctype="multipart/form-data">
 		<label for="image-upload">Upload a JPEG image of your sheet music:</label>
 		<input type="file" accept="image/jpeg" id="image-upload" name="image-upload" value="image-upload"/>
-		<input type="submit" />
+		<input onclick="loading()" type="submit" />
 	</form>
-	<p>DESCRIPTION. TBA</p>
+	<p id="desc">DESCRIPTION. TBA</p>
 	<p1>
 	<div class="muzieknootjes">
         <div class="noot-1">
