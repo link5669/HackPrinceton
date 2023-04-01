@@ -116,7 +116,7 @@
 		</div>
 	</nav>
 	<h1>Sheet Music Scanner</h1>
-	<form action="/sheet/compiling" method = "POST">
+	<form action="/sheet/compiling" method = "POST" enctype="multipart/form-data">
 		<label for="image-upload">Upload a JPEG image of your sheet music:</label>
 		<input type="file" accept="image/jpeg" id="image-upload" name="image-upload" value="image-upload"/>
 		<input type="submit" />
