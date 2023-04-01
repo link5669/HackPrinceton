@@ -1,8 +1,13 @@
 from operator import methodcaller
 from flask import session
 from flask import request, render_template, Flask, redirect
-from MIDIUtil.MidiFile3 import MIDIFile
+# from MIDIUtil.MidiFile3 import MIDIFile
 from os import urandom
+import pymongo
+
+client = pymongo.MongoClient("mongodb+srv://link5669:princeton@cluster0.uayhxkd.mongodb.net/?retryWrites=true&w=majority")
+db = client.test
+
 app = Flask(__name__)
 debug = True
 #why do we need secret keys? For this project it is not really necessary but...
@@ -72,6 +77,26 @@ def fail():
     '''
     return render_template("failed.html")
 
+@app.route('/login',methods = ['POST'])
+def login():
+   dblist = client.list_database_names()
+   if "user_info" in dblist:
+        print("The database exists.")
+   else:
+        mydb = client["user_info"]
+        mycol = mydb["customers"]
+        mydict = { "username": "init", "password": "init" }
+   x = mycol.insert_one(mydict)
+   if request.method == 'POST':
+      user = request.form['user_name']
+      return redirect(url_for('success',name = user))
+   else:
+      user = request.args.get('nm')
+      return redirect(url_for('success',name = user))
+
+@app.route('/login',methods = ['GET'])
+def see_login():
+    return render_template("signup.html")
 
 def main():
     """
