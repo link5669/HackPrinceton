@@ -26,9 +26,6 @@ app.secret_key = urandom(24)
 
 #helper method
 
-def login():
-    
-
 def image_to_midi(file_in,file_out):
     try:
         start("music_logic/resources/samples/piano.png",file_out)
@@ -83,8 +80,8 @@ def fail():
     '''
     return render_template("failed.html")
 
-@app.route('/login',methods = ['POST'])
-def login():
+@app.route('/register',methods = ['POST'])
+def register():
    print("a")
    dblist = client.list_database_names()
    if "user_info" in dblist:
@@ -96,12 +93,28 @@ def login():
    else:
         mydb = client["user_info"]
         mycol = mydb["customers"]
-        print(request.form['email'],request.form['password'])
+   return render_template("mainpage.html")
+
+@app.route('/register',methods = ['GET'])
+def see_register():
+   return render_template("signup.html")
+
+@app.route('/login',methods = ['POST'])
+def login():
+   mydb = client["user_info"]
+   collection = mydb["customers"]
+   print(request.form['email'], request.form['password'])
+   item_details = collection.find()
+   for item in item_details:
+       print(item)
+       if (item["username"] == request.form['email'] and
+           item["password"] == request.form['password']):
+           print('login')
    return render_template("mainpage.html")
 
 @app.route('/login',methods = ['GET'])
 def see_login():
-   return render_template("signup.html")
+   return render_template("login.html")
 
 def main():
     # image_to_midi()
