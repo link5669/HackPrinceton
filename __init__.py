@@ -103,6 +103,7 @@ def login():
            item["password"] == request.form['password']):
            resp = make_response(render_template("mainpage.html", login_message="Welcome, " + request.form['email']))
            resp.set_cookie('username', request.form['email'])
+           session["username"] = request.form['email']
            return resp
    return render_template("login.html")
 
@@ -112,7 +113,12 @@ def see_login():
 
 @app.route('/userdashboard',methods = ['GET'])
 def dashboard():
-    return render_template("userdashboard.html",username=session["username"])
+    if (type(request.cookies.get('username')) is not type(None)):
+        track_list = get_file_names()
+        print(track_list)
+        return render_template("userdashboard.html", username=request.cookies.get('username'), track_list=track_list)
+    else:
+        return redirect("/")
 
 
 def main():

@@ -125,8 +125,13 @@
 		</div>
 		<a href="login.html">Log Out</a>
 
-		<h2> <a href="{{ url_for('.process', midi_file='cropped.mid', username=username ) }}">BEEP</a> </h2>
+		<!-- <h2> <a href="{{ url_for('.process', midi_file='/midi/cropped.mid', username=username ) }}">BEEP</a> </h2> -->
 	</nav>
+	<ul>
+		{%  for track in track_list  %}
+			<li><a href="{{ url_for('.process', midi_file=track, username=username ) }}">{{track}}</a></li>
+		{%  endfor  %}
+	</ul>
 
     <div class="muzieknootjes">
         <div class="noot-1">
