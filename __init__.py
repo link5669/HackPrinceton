@@ -31,9 +31,9 @@ def get_file_names():
 def image_to_midi(file_in,file_out):
     try:
         start("static/images/" + file_in.filename ,file_out)
-        return True
+        return 1
     except:
-        return False
+        return 0
 
 @app.route("/", methods=['GET', 'POST'])
 def upload():
@@ -41,21 +41,20 @@ def upload():
     Page for uploading sheet music
     '''
     umess = ""
-    if (type(request.cookies.get('username')) is type(None)):
-        umess = "Login"
-        return render_template("welcome.html", login_message=umess)
-
+    print(request.cookies.get('username'))
+    if (type(request.cookies.get('username')) is type(None) or str(request.cookies.get('username')) == "None"):
+        return redirect("/login")
     else:
         umess = "Welcome, " + request.cookies.get('username')
     if request.method == "POST":
         file = request.files['image-upload']
         new_name = "/midi/" + file.filename[:file.filename.find(".")] + ".mid"
         processed = image_to_midi(file, "static/" + new_name) #function doesn't need to return midi -> can save within the static folder with filename
-        if processed:
+        if processed == 1:
             # send post request to sheet/processed where it plays the midi file and provides it for download -> deletes from static automatically?
             session["current_file"] = new_name
             return redirect(url_for('.process', midi_file=new_name, username=request.cookies.get('username')))
-        else:
+        elif processed == 0:
             # redirect request to sheet/upload about it not working
             return render_template("mainpage.html", login_message=umess, message="There's an issue with the image you uploaded. Try retaking or cropping the picture.")
     return render_template("mainpage.html", login_message=umess)        
@@ -97,21 +96,24 @@ def see_register():
 
 @app.route('/login',methods = ['POST'])
 def login():
-   mydb = client["user_info"]
-   collection = mydb["customers"]
-   item_details = collection.find()
-   for item in item_details:
-       if (item["username"] == request.form['email'] and
-           item["password"] == request.form['password']):
-           resp = make_response(render_template("mainpage.html", login_message="Welcome, " + request.form['email']))
-           resp.set_cookie('username', request.form['email'])
-           session["username"] = request.form['email']
-           return resp
-   return render_template("login.html")
+    mydb = client["user_info"]
+    collection = mydb["customers"]
+    item_details = collection.find()
+    print('dasljk')
+    for item in item_details:
+        if (item["username"] == request.form['email'] and
+            item["password"] == request.form['password']):
+            resp = make_response(render_template("mainpage.html", login_message="Welcome, " + request.form['email']))
+            print('hello')
+            resp.set_cookie('username', request.form['email'])
+            session["username"] = request.form['email']
+            return resp
+    return render_template("login.html")
 
 @app.route('/login',methods = ['GET'])
 def see_login():
-   return render_template("login.html")
+    print("alksjdlkasjd")
+    return render_template("login.html")
 
 @app.route('/userdashboard',methods = ['GET'])
 def dashboard():

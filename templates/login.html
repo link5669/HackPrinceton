@@ -13,7 +13,7 @@
 		font-family: Verdana, sans-serif;
 		background: linear-gradient(to right, #5D536B, #7D6B91, #989FCE);
 		background-size: 400% 400%;
-		animation: gradient 10s ease infinite;
+		animation: gradient 8s ease infinite;
 		color:#fff;
 		}
 		@keyframes gradient {
@@ -34,6 +34,11 @@
 		margin: 50px auto;
 		border-radius: 5px;
 		/*box-shadow: 0px 0px 10px rgba(0,0,0,0.2);*/
+		animation: slide-up 1.5s ease-in-out forwards;
+	}
+	@keyframes slide-up {
+		from { transform: translateY(50px); opacity: 0; }
+		to { transform: translateY(0); opacity: 1; }
 	}
 	form h2 {
 		font-size: 30px;
