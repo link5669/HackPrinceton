@@ -30,12 +30,23 @@ def welcome():
     return render_template("upload.html")
 
 
-@app.route("/sheet/process", methods=['GET', 'POST'])
+@app.route("/sheet/compiling", methods=['GET', 'POST'])
+def welcome():
+    '''
+    In between for processing the music sheet uploaded
+    '''
+
+    #value processed represents if it was able to be compiled properly or not
+    processed = True
+    if processed:
+        return redirect("/sheet/processed")
+
+@app.route("/sheet/processed", methods=['GET', 'POST'])
 def welcome():
     '''
     Page for uploading sheet music
     '''
-    return render_template("upload.html")
+    return render_template("processed.html")
 
 def main():
     """
