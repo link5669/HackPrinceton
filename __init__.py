@@ -30,7 +30,7 @@ username = ""
 
 def image_to_midi(file_in,file_out):
     try:
-        start("music_logic/resources/samples/piano.png",file_out)
+        start("static/images/" + file_in.filename ,file_out)
         return True
     except:
         return False
@@ -55,7 +55,9 @@ def upload():
         umess = "Welcome, " + username
     if request.method == "POST":
         file = request.files['image-upload']
-        new_name = "static/" + file.filename[:file.filename.find(".")] + ".mid"
+        file.save("static/images/" + file.filename)
+        new_name = "static/midi/" + file.filename[:file.filename.find(".")] + ".mid"
+        render_template("mainpage.html", login_message=umess, message="Loading!")
         processed = image_to_midi(file, new_name) #function doesn't need to return midi -> can save within the static folder with filename
         if processed:
             # send post request to sheet/processed where it plays the midi file and provides it for download -> deletes from static automatically?
@@ -66,7 +68,6 @@ def upload():
             # redirect request to sheet/upload about it not working
             # return redirect("/sheet/failed")
             return render_template("mainpage.html", login_message=umess, message="There's an issue with the image you uploaded. Try retaking or cropping the picture.")
-    
     return render_template("mainpage.html", login_message="Welcome, " + umess)        
 
 @app.route("/processed", methods=['GET', 'POST'])
