@@ -3,33 +3,33 @@ import subprocess
 import cv2
 import time
 import numpy as np
-from music_logic.best_fit import fit
-from music_logic.rectangle import Rectangle
-from music_logic.note import Note
+from best_fit import fit
+from rectangle import Rectangle
+from note import Note
 from random import randint
 from midiutil.MidiFile3 import MIDIFile
 
 staff_files = [
-    "music_logic/resources/template/staff2.png", 
-    "music_logic/resources/template/staff.png"]
+    "resources/template/staff2.png", 
+    "resources/template/staff.png"]
 quarter_files = [
-    "music_logic/resources/template/quarter.png", 
-    "music_logic/resources/template/solid-note.png"]
+    "resources/template/quarter.png", 
+    "resources/template/solid-note.png"]
 sharp_files = [
-    "music_logic/resources/template/sharp.png"]
+    "resources/template/sharp.png"]
 flat_files = [
-    "music_logic/resources/template/flat-line.png", 
-    "music_logic/resources/template/flat-space.png" ]
+    "resources/template/flat-line.png", 
+    "resources/template/flat-space.png" ]
 half_files = [
-    "music_logic/resources/template/half-space.png", 
-    "music_logic/resources/template/half-note-line.png",
-    "music_logic/resources/template/half-line.png", 
-    "music_logic/resources/template/half-note-space.png"]
+    "resources/template/half-space.png", 
+    "resources/template/half-note-line.png",
+    "resources/template/half-line.png", 
+    "resources/template/half-note-space.png"]
 whole_files = [
-    "music_logic/resources/template/whole-space.png", 
-    "music_logic/resources/template/whole-note-line.png",
-    "music_logic/resources/template/whole-line.png", 
-    "music_logic/resources/template/whole-note-space.png"]
+    "resources/template/whole-space.png", 
+    "resources/template/whole-note-line.png",
+    "resources/template/whole-line.png", 
+    "resources/template/whole-note-space.png"]
 
 staff_imgs = [cv2.imread(staff_file, 0) for staff_file in staff_files]
 quarter_imgs = [cv2.imread(quarter_file, 0) for quarter_file in quarter_files]
@@ -104,7 +104,7 @@ def start(im_path):
     for r in staff_recs:
         r.draw(staff_recs_img, (0, 0, 255), 2)
     cv2.imwrite('staff_recs_img.png', staff_recs_img)
-    # open_file('staff_recs_img.png')
+    open_file('staff_recs_img.png')
 
     print("Discovering staff locations...")
     staff_boxes = merge_recs([Rectangle(0, r.y, img_width, r.h) for r in staff_recs], 0.01)
@@ -112,7 +112,7 @@ def start(im_path):
     for r in staff_boxes:
         r.draw(staff_boxes_img, (0, 0, 255), 2)
     cv2.imwrite('staff_boxes_img.png', staff_boxes_img)
-    # open_file('staff_boxes_img.png')
+    open_file('staff_boxes_img.png')
     
     print("Matching sharp image...")
     sharp_recs = locate_images(img_gray, sharp_imgs, sharp_lower, sharp_upper, sharp_thresh)
@@ -123,7 +123,7 @@ def start(im_path):
     for r in sharp_recs:
         r.draw(sharp_recs_img, (0, 0, 255), 2)
     cv2.imwrite('sharp_recs_img.png', sharp_recs_img)
-    # open_file('sharp_recs_img.png')
+    open_file('sharp_recs_img.png')
 
     print("Matching flat image...")
     flat_recs = locate_images(img_gray, flat_imgs, flat_lower, flat_upper, flat_thresh)
@@ -134,7 +134,7 @@ def start(im_path):
     for r in flat_recs:
         r.draw(flat_recs_img, (0, 0, 255), 2)
     cv2.imwrite('flat_recs_img.png', flat_recs_img)
-    # open_file('flat_recs_img.png')
+    open_file('flat_recs_img.png')
 
     print("Matching quarter image...")
     quarter_recs = locate_images(img_gray, quarter_imgs, quarter_lower, quarter_upper, quarter_thresh)
@@ -145,7 +145,7 @@ def start(im_path):
     for r in quarter_recs:
         r.draw(quarter_recs_img, (0, 0, 255), 2)
     cv2.imwrite('quarter_recs_img.png', quarter_recs_img)
-    # open_file('quarter_recs_img.png')
+    open_file('quarter_recs_img.png')
 
     print("Matching half image...")
     half_recs = locate_images(img_gray, half_imgs, half_lower, half_upper, half_thresh)
@@ -156,7 +156,7 @@ def start(im_path):
     for r in half_recs:
         r.draw(half_recs_img, (0, 0, 255), 2)
     cv2.imwrite('half_recs_img.png', half_recs_img)
-    # open_file('half_recs_img.png')
+    open_file('half_recs_img.png')
 
     print("Matching whole image...")
     whole_recs = locate_images(img_gray, whole_imgs, whole_lower, whole_upper, whole_thresh)
@@ -167,7 +167,7 @@ def start(im_path):
     for r in whole_recs:
         r.draw(whole_recs_img, (0, 0, 255), 2)
     cv2.imwrite('whole_recs_img.png', whole_recs_img)
-    # open_file('whole_recs_img.png')
+    open_file('whole_recs_img.png')
 
     note_groups = []
     for box in staff_boxes:
@@ -211,7 +211,7 @@ def start(im_path):
         r.draw(img, (0, 0, 255), 2)
         
     cv2.imwrite('res.png', img)
-    # open_file('res.png')
+    open_file('res.png')
    
     for note_group in note_groups:
         print([ note.note + " " + note.sym for note in note_group])	
@@ -243,7 +243,7 @@ def start(im_path):
 
     midi.addNote(track,channel,pitch,time,4,0)
     # And write it to disk.
-    # binfile = open("output.mid", 'wb')
+    binfile = open("music_logic/output.mid", 'wb')
     midi.writeFile(binfile)
     binfile.close()
-    # open_file('output.mid')
+    open_file('output.mid')

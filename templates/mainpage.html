@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title>Sheet Music Scanner</title>
+<<<<<<< Updated upstream
 	<style>
 		body {
 			font-family: Verdana, sans-serif;
@@ -107,6 +108,9 @@
 			background-color: #347FC4;
 		}
 	</style>
+=======
+	<link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
+>>>>>>> Stashed changes
 </head>
 <body>
 	<nav class="navbar">
@@ -116,12 +120,11 @@
 		</div>
 	</nav>
 	<h1>Sheet Music Scanner</h1>
-	<form action="/sheet/compiling" method = "POST">
+	<form action="/sheet/compiling" method = "POST" enctype="multipart/form-data">
 		<label for="image-upload">Upload a JPEG image of your sheet music:</label>
 		<input type="file" accept="image/jpeg" id="image-upload" name="image-upload" value="image-upload"/>
 		<input type="submit" />
 	</form>
 	<p>DESCRIPTION. TBA</p>
-	
 </body>
 </html>
