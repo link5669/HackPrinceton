@@ -5,9 +5,14 @@ from midiutil.MidiFile3 import MIDIFile
 from os import urandom
 import pymongo
 from music_logic.main import start
+from pymongo.errors import ConnectionFailure
 
-client = pymongo.MongoClient("mongodb+srv://link5669:princeton@cluster0.uayhxkd.mongodb.net/?retryWrites=true&w=majority")
+client = pymongo.MongoClient("mongodb+srv://princeton:princeton@cluster0.uayhxkd.mongodb.net/?retryWrites=true&w=majority")
 db = client.test
+try:
+    client.admin.command('ping')
+except ConnectionFailure:
+    print("Server not available")
 
 app = Flask(__name__)
 debug = True
@@ -20,6 +25,8 @@ app.secret_key = urandom(24)
 #   Adding error messages and try and fails
 
 #helper method
+
+username = ""
 
 def image_to_midi(file_in,file_out):
     try:
@@ -41,6 +48,11 @@ def upload():
     '''
     Page for uploading sheet music
     '''
+    umess = ""
+    if (username == ""):
+        umess = "Login"
+    else:
+        umess = "Welcome, " + username
     if request.method == "POST":
         print("post req activated!")
         file = request.files['image-upload']
@@ -54,9 +66,9 @@ def upload():
         else:
             # redirect request to sheet/upload about it not working
             # return redirect("/sheet/failed")
-            return render_template("mainpage.html", message="There's an issue with the image you uploaded. Try retaking or cropping the picture.")
+            return render_template("mainpage.html", login_message=umess, message="There's an issue with the image you uploaded. Try retaking or cropping the picture.")
     
-    return render_template("mainpage.html")        
+    return render_template("mainpage.html", login_message="Welcome, " + umess)        
 
 @app.route("/processed", methods=['GET', 'POST'])
 def process():
@@ -75,26 +87,42 @@ def fail():
     '''
     return render_template("failed.html")
 
-@app.route('/login',methods = ['POST'])
-def login():
+@app.route('/register',methods = ['POST'])
+def register():
+   print("a")
    dblist = client.list_database_names()
    if "user_info" in dblist:
         print("The database exists.")
+        mydb = client["user_info"]
+        mycol = mydb["customers"]
+        mydict = { "username": request.form['email'], "password": request.form['password'] }
+        x = mycol.insert_one(mydict)
    else:
         mydb = client["user_info"]
         mycol = mydb["customers"]
-        mydict = { "username": "init", "password": "init" }
-   x = mycol.insert_one(mydict)
-   if request.method == 'POST':
-      user = request.form['user_name']
-      return redirect(url_for('success',name = user))
-   else:
-      user = request.args.get('nm')
-      return redirect(url_for('success',name = user))
+   return render_template("mainpage.html")
+
+@app.route('/register',methods = ['GET'])
+def see_register():
+   return render_template("signup.html")
+
+@app.route('/login',methods = ['POST'])
+def login():
+   mydb = client["user_info"]
+   collection = mydb["customers"]
+   print(request.form['email'], request.form['password'])
+   item_details = collection.find()
+   for item in item_details:
+       print(item)
+       if (item["username"] == request.form['email'] and
+           item["password"] == request.form['password']):
+           username = request.form['email']
+           print('login')
+   return render_template("mainpage.html", login_message="Welcome, " + username)
 
 @app.route('/login',methods = ['GET'])
 def see_login():
-    return render_template("signup.html")
+   return render_template("login.html")
 
 def main():
     # image_to_midi()

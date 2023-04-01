@@ -107,7 +107,7 @@
 			background-color: #347FC4;
 		}
 	</style>
-	<link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
+	<!-- <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}"> -->
 </head>
 <body>
 	<nav class="navbar">
@@ -115,7 +115,7 @@
 			<a href="#">Home</a>
 			<a href="userdashboard.html">Dashboard</a>
 		</div>
-			<a href="login.html">Logout</a>
+			<a href="login">{{login_message}}</a>
 	</nav>
 	<h1>Sheet Music Scanner</h1>
 	<h2></h2>
