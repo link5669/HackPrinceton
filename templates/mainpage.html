@@ -32,17 +32,6 @@
 			text-align: center;
 			color: #333;
 			margin-top: 50px;
-			opacity: 0;
-			animation: fade-in 1.5s ease-in-out forwards;
-		}
-		
-		@keyframes fade-in {
-			from { opacity: 0; }
-			to { opacity: 1; }
-		}
-
-		label {
- 			padding: 20px 0;
 		}
 
 		p {
@@ -50,7 +39,6 @@
 			color: #555;
 			margin-top: 20px;
 			font-size: 18px;
-			animation: slide-up 1.5s ease-in-out forwards;
 		}
 
 		form {
@@ -58,15 +46,6 @@
 			flex-direction: column;
 			align-items: center;
 			margin-top: 50px;
-			margin-bottom: 50px;
-			transform: translateY(50px);
-			opacity: 0;
-			animation: slide-up 1.5s ease-in-out forwards;
-		}
-		
-		@keyframes slide-up {
-			from { transform: translateY(50px); opacity: 0; }
-			to { transform: translateY(0); opacity: 1; }
 		}
 
 		input[type=file] {
@@ -102,6 +81,7 @@
 		</div>
 	</nav>
 	<h1>Sheet Music Scanner</h1>
+	<p>DESCRIPTION. TBA</p>
 	<form action="/sheet/compiling" method = "POST">
 		<label for="image-upload">Upload a JPEG image of your sheet music:</label>
 		<input type="file" accept="image/jpeg" id="image-upload" name="image-upload" value="image-upload"/>

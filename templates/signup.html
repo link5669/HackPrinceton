@@ -1,0 +1,118 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Signup</title>
+	<style type="text/css">
+		body {
+            font-family: Calibri, sans-serif;
+			background-color: #f1f1f1;
+		}
+        #header {
+            background-color: #5A5377;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+		form {
+			background-color: #fff;
+			padding: 20px;
+			max-width: 500px;
+			margin: 50px auto;
+			border-radius: 5px;
+			box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+		}
+		form h2 {
+			font-size: 30px;
+			font-weight: 600;
+			margin-top: 0px;
+			margin-bottom: 20px;
+			color: #333;
+		}
+		form label {
+			font-size: 18px;
+			display: block;
+			margin-bottom: 5px;
+			color: #333;
+		}
+		form input[type="text"], form input[type="password"], form input[type="number"] {
+			height: 40px;
+			border-radius: 5px;
+			padding: 0px 10px;
+			border: none;
+			width: 100%;
+			font-size: 16px;
+			margin-bottom: 20px;
+			box-sizing: border-box;
+			border: solid thin #aaa;
+		}
+		form input[type="submit"] {
+			background-color: #1877f2;
+			color: #fff;
+			border: none;
+			padding: 10px 20px;
+			font-size: 18px;
+			border-radius: 5px;
+			cursor: pointer;
+			transition: background-color 0.2s ease-in-out;
+		}
+		form input[type="submit"]:hover {
+			background-color: #166fe5;
+		}
+		form a {
+			color: #333;
+			text-decoration: none;
+			font-size: 16px;
+		}
+		form a:hover {
+			color: #1877f2;
+		}
+	</style>
+</head>
+<body>
+<div id="header">
+        <h1>SWE Meeting Sign In</h1>
+    </div>
+	<form method="post">
+		<h2>Sign up</h2>
+
+		<label> First Name</label>
+		<input type="text" name="first_name">
+
+		<label>Last Name</label>
+		<input type="text" name="last_name">
+
+		<label>RUID</label>
+		<input type="number" name="ruid">
+
+		<label>Email</label>
+		<input type="text" name="email">
+
+		<label>Major</label>
+		<input type="text" name="major">
+
+		<label>Graduation Year</label>
+		<input type="number" name="graduation_year">
+        
+        <label>Academic Status</label>
+		<select name="academic_status">
+			<option value="undergrad">Undergraduate</option>
+			<option value="grad">Graduate</option>
+		</select>
+
+		<label>NetID</label>
+		<input type="text" name="user_name">
+
+		<label>Password</label>
+		<input type="password" name="password">
+
+		<input type="submit" value="Sign up">
+
+		<div style="margin-top: 20px;">
+			Already have an account? <a href="login.php">Click to Login</a>
+		</div>
+	</form>
+
+</body>
+</html>
