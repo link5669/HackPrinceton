@@ -2,6 +2,12 @@
 <html>
 <head>
 	<title>Sheet Music Scanner</title>
+	<script>
+		 	function hide() {
+				var x = document.getElementById("hide");
+				x.style.display = "block";
+			}
+	</script>
 	<style>
 		body {
 			font-family: Verdana, sans-serif;
@@ -195,9 +201,10 @@
 		<form action="/" method="POST" enctype="multipart/form-data">
 			<label for="image-upload">Upload a JPEG image of your sheet music:</label>
 			<input type="file" accept="image/jpeg" id="image-upload" name="image-upload" value="image-upload" />
-			<input onClick="loading()" type="submit" />
+			<input onClick="hide()" type="submit" />
 		</form>
 		<p id="desc">Takes a JPEG of sheet music and converts into a MIDI file</p>
+		<div id="hide" style="margin: auto;" hidden ><img src="https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif" style="display:block; margin-left:auto; margin-right: auto;"></div>
 	</div>
 	<h2>{{message}}</h2>
 	<p1>
