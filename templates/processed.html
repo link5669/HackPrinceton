@@ -168,8 +168,11 @@
           }
           .fadein {
             animation: slide-up 1.5s ease-in-out forwards;
-
           }
+          .items {
+            display: grid;
+            grid-gap: 10px;
+            }
           @keyframes slide-up {
 			from { transform: translateY(50px); opacity: 0; }
 			to { transform: translateY(0); opacity: 1; }
@@ -193,22 +196,31 @@
             <a href="login.html">Log Out</a>
         </nav>
         <div class= "fadein">
-        <h1>Play the Audio</h1>
-        <midi-player src="{{ url_for('static',filename='{}'.format(file_dir) ) }}" sound-font visualizer="#myVisualizer"></midi-player>
-        <midi-visualizer type="piano-roll" id="myPianoRollVisualizer" src="{{ url_for('static',filename='{}'.format(file_dir) ) }}">
-      </midi-visualizer>
-
-<script src="https://cdn.jsdelivr.net/combine/npm/tone@14.7.58,npm/@magenta/music@1.23.1/es6/core.js,npm/focus-visible@5,npm/html-midi-player@1.5.0"></script>
-        <div class="button-container">
-            <button class="download-button" onclick="window.location.href='static/{{file_dir}}'">Download</button>
-            
-            <form method="post">
-                <input class="button" type="submit" value="Add to Dashboard">
-            </form>
-            <br>
-        </div>
-        <br>
-        <button class="button">Copy Link to Clipboard</button>
+            <div class="items">
+                <h1 style="margin: auto;">Play the Audio</h1>
+                <br>
+                <midi-player style="margin: auto;"src="{{ url_for('static',filename='{}'.format(file_dir) ) }}" sound-font visualizer="#myVisualizer">
+                </midi-player>
+                <br>
+                <midi-visualizer style="margin: auto;"type="piano-roll" id="myPianoRollVisualizer"
+                    src="{{ url_for('static',filename='{}'.format(file_dir) ) }}"></midi-visualizer>
+                <br>
+                
+                <script
+                    src="https://cdn.jsdelivr.net/combine/npm/tone@14.7.58,npm/@magenta/music@1.23.1/es6/core.js,npm/focus-visible@5,npm/html-midi-player@1.5.0"></script>
+                <div class="button-container">
+                    <button class="download-button" onclick="window.location.href='static/{{file_dir}}'">Download</button>
+                
+                    <form method="post">
+                        <input class="button" type="submit" value="Add to Dashboard">
+                    </form>
+                    <button class="button">Copy Link to Clipboard</button>
+                
+                    <br>
+                </div>
+                <br>
+            </div>
+        
     </div>
         <p1>
             <div class="muzieknootjes">
