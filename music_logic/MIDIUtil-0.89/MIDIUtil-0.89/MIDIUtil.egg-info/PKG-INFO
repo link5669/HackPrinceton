@@ -1,4 +1,4 @@
-Metadata-Version: 1.0
+Metadata-Version: 2.1
 Name: MIDIUtil
 Version: 0.89
 Summary: MIDIUtil, a MIDI Interface for Python
@@ -6,7 +6,9 @@ Home-page: www.emergentmusics.org
 Author: Mark Conway Wirt
 Author-email: emergentmusics) at (gmail . com
 License: Copyright (C) 2009, Mark Conway Wirt. See License.txt for details.
-Description: 
-        This package provides a simple interface to allow Python programs to
-        write multi-track MIDI files.
 Platform: Platform Independent
+License-File: License.txt
+
+
+This package provides a simple interface to allow Python programs to
+write multi-track MIDI files.

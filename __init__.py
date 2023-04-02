@@ -6,6 +6,12 @@ from os import urandom
 import pymongo
 from music_logic.main import start
 from pymongo.errors import ConnectionFailure
+import os
+from twilio.rest import Client
+
+account_sid = os.environ['AC8ef87725499512171f849e7a4beb8dc0']
+auth_token = os.environ['75d438aa82bc1908bba7471cbc8f9f5d']
+twclient = Client(account_sid, auth_token)
 
 client = pymongo.MongoClient("mongodb+srv://princeton:princeton@cluster0.uayhxkd.mongodb.net/?retryWrites=true&w=majority")
 db = client.test
@@ -71,6 +77,13 @@ def process():
         mydict = { "username": request.cookies.get('username'), "file": midi_file }
         x = mycol.insert_one(mydict)
         get_file_names()
+        message = twclient.messages.create(
+            body="Your sheet music is ready for download!",
+            from_='<your Twilio phone number>',
+            to='<18482135364>'
+        )
+        print(message.sid)
+
     return render_template("processed.html", file_dir=midi_file)
 
 @app.route("/failed", methods=['GET', 'POST'])
