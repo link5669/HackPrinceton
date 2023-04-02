@@ -6,8 +6,8 @@
 		body {
 			font-family: Verdana, sans-serif;
 		    background: linear-gradient(to right, #5D536B, #7D6B91, #989FCE);
-    background-size: 400% 400%;
-    animation: gradient 8s ease infinite;
+    		background-size: 400% 400%;
+    		animation: gradient 10s ease infinite;
 			color: #fff;
 		}
 		@keyframes gradient {
@@ -175,11 +175,7 @@
           }
  
 	</style>
-	<script>
-		function loading() {
-			document.getElementById("desc").innerHTML = "Loading..."
-		}
-	</script>
+	<!-- <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}"> -->
 </head>
 
 <body>
@@ -188,18 +184,14 @@
 			<a href="#">Home</a>
 			<a href="/userdashboard">Dashboard</a>
 		</div>
-			<a href="/login">{{login_message}}</a>
+			<a href="login">{{login_message}}</a>
 	</nav>
 	<h1>Sheet Music Scanner</h1>
 	<div id="content">
-		<form action="/" method="POST" enctype="multipart/form-data">
-			<label for="image-upload">Upload a JPEG image of your sheet music:</label>
-			<input type="file" accept="image/jpeg" id="image-upload" name="image-upload" value="image-upload" />
-			<input onClick="loading()" type="submit" />
-		</form>
-		<p id="desc">Takes a JPEG of sheet music and converts into a MIDI file</p>
+		<p>DESCRIPTION. TBA</p>
 	</div>
 	<h2>{{message}}</h2>
+
 	<p1>
 	<div class="muzieknootjes">
         <div class="noot-1">
