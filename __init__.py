@@ -71,6 +71,7 @@ def process():
         mydict = { "username": request.cookies.get('username'), "file": midi_file }
         x = mycol.insert_one(mydict)
         get_file_names()
+        return redirect("/userdashboard")
     return render_template("processed.html", file_dir=midi_file)
 
 @app.route("/failed", methods=['GET', 'POST'])
