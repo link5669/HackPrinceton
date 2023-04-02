@@ -6,6 +6,10 @@ from os import urandom
 import pymongo
 from music_logic.main import start
 from pymongo.errors import ConnectionFailure
+import os
+
+account_sid = os.environ['AC8ef87725499512171f849e7a4beb8dc0']
+auth_token = os.environ['75d438aa82bc1908bba7471cbc8f9f5d']
 
 client = pymongo.MongoClient("mongodb+srv://princeton:princeton@cluster0.uayhxkd.mongodb.net/?retryWrites=true&w=majority")
 db = client.test
