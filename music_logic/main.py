@@ -187,7 +187,6 @@ def start(im_path,out_path):
             time += duration
 
     midi.addNote(track,channel,pitch,time,4,0)
-    # And write it to disk.
     binfile = open(out_path, 'wb')
     midi.writeFile(binfile)
     binfile.close()

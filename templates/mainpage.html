@@ -177,7 +177,7 @@
 	</style>
 	<script>
 		function loading() {
-			document.getElementById("desc").innerHTML = "Loading"
+			document.getElementById("desc").innerHTML = "Loading..."
 		}
 	</script>
 </head>
@@ -195,9 +195,9 @@
 		<form action="/" method="POST" enctype="multipart/form-data">
 			<label for="image-upload">Upload a JPEG image of your sheet music:</label>
 			<input type="file" accept="image/jpeg" id="image-upload" name="image-upload" value="image-upload" />
-			<input type="submit" />
+			<input onClick="loading()" type="submit" />
 		</form>
-		<p>Takes a JPEG of sheet music and converts into a MIDI file</p>
+		<p id="desc">Takes a JPEG of sheet music and converts into a MIDI file</p>
 	</div>
 	<h2>{{message}}</h2>
 	<p1>
